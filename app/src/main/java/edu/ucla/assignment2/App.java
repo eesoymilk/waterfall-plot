@@ -16,7 +16,7 @@ public class App extends PApplet {
 
     int bands = 512, bufferSize = 400;
     float[] spectrum = new float[bands];
-    float minIntensityLog = Float.POSITIVE_INFINITY, maxIntensityLog = Float.NEGATIVE_INFINITY;
+    float multiplier = 80000, minIntensityLog = Float.POSITIVE_INFINITY, maxIntensityLog = Float.NEGATIVE_INFINITY;
     Deque<float[]> buffer = new ArrayDeque<>();
     {
         for (int i = 0; i < bufferSize; i++) {
@@ -87,11 +87,11 @@ public class App extends PApplet {
     }
 
     void findLogIntensityExtrema() {
-        float refValue = buffer.getLast()[0] + 1;
+        float refValue = buffer.getLast()[0] * multiplier + 1;
         float minIntensity = refValue, maxIntensity = refValue;
         for (float[] array : buffer) {
             for (float value : array) {
-                value = value + 1;
+                value = value * multiplier + 1;
                 if (value < minIntensity) {
                     minIntensity = value;
                 } else if (value > maxIntensity) {
@@ -111,7 +111,7 @@ public class App extends PApplet {
             int x = Math.round(map(xLog, 0, log(512) / log(2), 0, width - 1));
             int xNext = Math.round(map(nextXLog, 0, log(512) / log(2), 0, width - 1));
 
-            float logMagnitude = log(1 + spectrum[i]) / log(2);
+            float logMagnitude = log(1 + spectrum[i] * multiplier) / log(2);
             int colorValue = turboColor(logMagnitude, minIntensityLog, maxIntensityLog);
             for (int j = x; j < xNext; j++) {
                 spectroImage.pixels[j] = colorValue;

@@ -1,6 +1,6 @@
-# Bakeoff Project
+# 209AS Assignment 2: Waterfall Plot
 
-This is the repository for the bakeoff project for the course "Fall 2024 ECE 209AS – Engineer Interactive Systems" at the University of California, Los Angeles.
+This is the repository for the assignment 2 for the course "Fall 2024 ECE 209AS – Engineer Interactive Systems" at the University of California, Los Angeles.
 
 ## Usage
 
