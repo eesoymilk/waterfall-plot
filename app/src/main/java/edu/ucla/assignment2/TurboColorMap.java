@@ -1,6 +1,9 @@
 package edu.ucla.assignment2;
 
 public class TurboColorMap {
+    // Turbo colormap lookup table
+    // This data is from a GitHub Gist:
+    // https://gist.github.com/mikhailov-work/6a308c20e494d9e0ccc29036b28faa7a
     public static double[][] turboData = { { 0.18995, 0.07176, 0.23217 }, { 0.19483, 0.08339, 0.26149 },
             { 0.19956, 0.09498, 0.29024 },
             { 0.20415, 0.10652, 0.31844 }, { 0.20860, 0.11802, 0.34607 }, { 0.21291, 0.12947, 0.37314 },

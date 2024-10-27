@@ -113,11 +113,13 @@ public class App extends PApplet {
 
     void findLogIntensityExtrema() {
         if (!adaptiveMapping) {
+            // Use predefined intensity range for static mapping
             minIntensityLog = staticMinIntensityLog;
             maxIntensityLog = staticMaxIntensityLog;
             return;
         }
 
+        // Find the minimum and maximum intensity values in the buffer
         float refValue = buffer.getLast()[0] * multiplier + 1;
         float minIntensity = refValue, maxIntensity = refValue;
         for (float[] array : buffer) {
@@ -145,6 +147,7 @@ public class App extends PApplet {
             float logMagnitude = log(1 + spectrum[i] * multiplier) / log(2);
             int colorValue = turboColor(logMagnitude, minIntensityLog, maxIntensityLog);
             for (int j = x; j < xNext; j++) {
+                // Fill all pixels until the next x position
                 spectroImage.pixels[j] = colorValue;
             }
         }

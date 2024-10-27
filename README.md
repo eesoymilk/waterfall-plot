@@ -1,6 +1,11 @@
 # 209AS Assignment 2: Waterfall Plot
 
-This is the repository for the assignment 2 for the course "Fall 2024 ECE 209AS – Engineer Interactive Systems" at the University of California, Los Angeles. Please refer to **report.pdf** for the detailed report which satisfies the requirements and the deliverables of the assignment.
+This is the repository for the assignment 2 for the course "Fall 2024 ECE 209AS – Engineer Interactive Systems" at the University of California, Los Angeles. 
+
+## Requirements and Deliverables
+
+- **report.pdf**: A detailed report.
+- **demo.mkv**: A video demonstration of the program.
 
 ## Usage
 
