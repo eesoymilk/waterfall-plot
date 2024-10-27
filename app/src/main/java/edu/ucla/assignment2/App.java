@@ -1,5 +1,8 @@
 package edu.ucla.assignment2;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -14,9 +17,12 @@ public class App extends PApplet {
     AudioIn in;
     PImage spectroImage;
 
+    boolean adaptiveMapping = false;
     int bands = 512, bufferSize = 400;
     float[] spectrum = new float[bands];
-    float multiplier = 80000, minIntensityLog = Float.POSITIVE_INFINITY, maxIntensityLog = Float.NEGATIVE_INFINITY;
+    float multiplier = 80000, minIntensityLog, maxIntensityLog;
+    float staticMinIntensityLog = 0, staticMaxIntensityLog = log(80000 + 1) / log(2);
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
     Deque<float[]> buffer = new ArrayDeque<>();
     {
         for (int i = 0; i < bufferSize; i++) {
@@ -35,6 +41,10 @@ public class App extends PApplet {
 
     @Override
     public void setup() {
+        File imagesFolder = new File("images");
+        if (!imagesFolder.exists()) {
+            imagesFolder.mkdirs();
+        }
         spectroImage = createImage(width, height, RGB);
 
         background(0);
@@ -73,6 +83,21 @@ public class App extends PApplet {
 
         // plot the spectrogram
         image(spectroImage, 0, 0);
+
+        stroke(255);
+        if (adaptiveMapping) {
+            text("Adaptive Mapping", width / 2, 20);
+        } else {
+            text("Static Mapping", width / 2, 20);
+        }
+    }
+
+    @Override
+    public void keyPressed() {
+        switch (key) {
+            case 'm' -> toggleMapping();
+            case 's' -> saveSpectrogram();
+        }
     }
 
     void scrollImage() {
@@ -87,6 +112,12 @@ public class App extends PApplet {
     }
 
     void findLogIntensityExtrema() {
+        if (!adaptiveMapping) {
+            minIntensityLog = staticMinIntensityLog;
+            maxIntensityLog = staticMaxIntensityLog;
+            return;
+        }
+
         float refValue = buffer.getLast()[0] * multiplier + 1;
         float minIntensity = refValue, maxIntensity = refValue;
         for (float[] array : buffer) {
@@ -130,5 +161,16 @@ public class App extends PApplet {
         float blue = (float) TurboColorMap.turboData[grayScale][2];
 
         return color(red * 255, green * 255, blue * 255);
+    }
+
+    void toggleMapping() {
+        adaptiveMapping = !adaptiveMapping;
+    }
+
+    void saveSpectrogram() {
+        String timestamp = LocalDateTime.now().format(dateFormatter);
+        String filename = "images/spectrogram_" + timestamp + ".png";
+        spectroImage.save(filename);
+        println("Spectrogram saved as: " + filename);
     }
 }

@@ -17,3 +17,6 @@ bin/
 
 # Ignore vscode settings
 .vscode/
+
+# Ignore screenshots
+app/images
