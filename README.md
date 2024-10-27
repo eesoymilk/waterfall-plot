@@ -5,7 +5,7 @@ This is the repository for the assignment 2 for the course "Fall 2024 ECE 209AS 
 ## Requirements and Deliverables
 
 - **report.pdf**: A detailed report.
-- **demo.mkv**: A video demonstration of the program.
+- **demo.mp4**: A video demonstration of the program.
 
 ## Usage
 
